@@ -1,19 +1,20 @@
-# !/bin/bash
+#!/bin/bash
+set -xe
+
 # For Ubuntu 22.04
-# Intsalling Java
+# Installing Java
 sudo apt update
 sudo apt install fontconfig openjdk-21-jre -y
 java --version
 
 # Installing Jenkins
 sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
-  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
 echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
   https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
   /etc/apt/sources.list.d/jenkins.list > /dev/null
 sudo apt update
-sudo apt install jenkins -y
-
+sudo apt install jenkins
 # Installing Docker
 sudo apt update
 sudo apt install docker.io -y
@@ -22,12 +23,8 @@ sudo usermod -aG docker ubuntu
 sudo systemctl restart docker
 sudo chmod 777 /var/run/docker.sock
 
-# If you don't want to install Jenkins, you can create a container of Jenkins
-# docker run -d -p 8080:8080 -p 50000:50000 --name jenkins-container jenkins/jenkins:lts
-
-# Run Docker Container of Sonarqube
-docker run -d --name sonarqube -p 9000:9000 sonarqube:community
-
+# Run Docker Container of Sonarqube (COMMENTED – needs >2GB RAM)
+# docker run -d --name sonarqube -p 9000:9000 sonarqube:community
 
 # Installing Terraform
 sudo apt install unzip -y
